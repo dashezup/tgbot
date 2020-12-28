@@ -62,8 +62,8 @@ async def kick_restricted_after_delay(delay, button_message: Message):
     join_message = button_message.reply_to_message
     group_chat = button_message.chat
     user_id = join_message.from_user.id
+    await join_message.delete()
+    await button_message.delete()
     if (await group_chat.get_member(user_id)).status == "restricted":
-        await join_message.delete()
-        await button_message.delete()
         await group_chat.kick_member(user_id)
         await group_chat.unban_member(user_id)
