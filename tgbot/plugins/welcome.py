@@ -1,3 +1,4 @@
+"""A Pyrogram Smart Plugin to verify if new members are human"""
 import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
@@ -9,6 +10,7 @@ WELCOME_DELAY_KICK_SEC = WELCOME_DELAY_KICK_MIN * 60
 
 @Client.on_message(filters.chat(WELCOME_CHATS) & filters.new_chat_members)
 async def welcome(_, message: Message):
+    """Mute new member and send message with button"""
     new_members = [f"{u.mention}" for u in message.new_chat_members]
     text = (f"Welcome, {', '.join(new_members)}\n**Are you human?**\n"
             "You will be removed from this chat if you are not verified "
@@ -33,6 +35,9 @@ async def welcome(_, message: Message):
 
 @Client.on_callback_query(filters.regex("pressed_button"))
 async def callback_query_welcome_button(_, callback_query):
+    """After the new member press the button, set his permissions to
+    chat permissions, delete button message and join message
+    """
     button_message = callback_query.message
     join_message = button_message.reply_to_message
     group_chat = button_message.chat
@@ -50,6 +55,9 @@ async def callback_query_welcome_button(_, callback_query):
 
 
 async def kick_restricted_after_delay(delay, button_message: Message):
+    """If the new member is still restricted after the day, delete
+    button message and join message and then kick him
+    """
     await asyncio.sleep(delay)
     join_message = button_message.reply_to_message
     group_chat = button_message.chat
