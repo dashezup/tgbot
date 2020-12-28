@@ -93,7 +93,7 @@ async def _fetch_and_send_music(message: Message):
         if message.chat.type == "private":
             await message.delete()
     except Exception as e:
-        await message.reply_text(e)
+        await message.reply_text(repr(e))
 
 
 def _youtube_video_not_music(info_dict):
