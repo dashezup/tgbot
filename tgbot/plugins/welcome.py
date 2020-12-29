@@ -1,6 +1,6 @@
 """A Pyrogram Smart Plugin to verify if new members are human
 
-../config.py
+# ../config.py
 # int | str | list
 # the bot must be admin in the chat
 WELCOME_CHATS = -1234567890123

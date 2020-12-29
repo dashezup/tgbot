@@ -12,10 +12,10 @@ A Telegram bot made with Pyrogram
 
 1. `virtualenv venv` to create a virtual environment
 2. `venv/bin/pip install -U -r requirements.txt` to install the requirements
-3. Copy the configuration files and replace the values with your own
+3. Copy the configuration file, and replace the values with your own.
+Enable plugins which you need and add related configuration to `tgbot/config.py`
    ```
    cp tgbot/config{_example,}.ini
-   cp tgbot/config{_example,}.py
    ```
 4. Run with `venv/bin/python -m tgbot`
 5. Stop with <kbd>CTRL+C</kbd>
