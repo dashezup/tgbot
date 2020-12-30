@@ -44,3 +44,21 @@ async def command_start(_, message: Message):
 async def command_help(_, message: Message):
     """/help usage of the bot"""
     await message.reply(COMMANDS_TEXT_HELP)
+
+
+@Client.on_message(filters.command(["json"])
+                   & (filters.chat(COMMANDS_CHATS) | filters.private)
+                   & filters.incoming
+                   & ~filters.edited)
+async def command_json(_, message: Message):
+    """/json get user info"""
+    await message.reply(f"<code>{message}</code>")
+
+
+@Client.on_message(filters.command(["id"])
+                   & (filters.chat(COMMANDS_CHATS) | filters.private)
+                   & filters.incoming
+                   & ~filters.edited)
+async def command_id(_, message: Message):
+    """/id get user info"""
+    await message.reply(f"<code>{message.from_user}</code>")
