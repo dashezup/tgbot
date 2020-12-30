@@ -6,6 +6,6 @@
 __pycache__/
 
 # tgbot
-tgbot/config.ini
-tgbot/config.py
-tgbot/tgbot.session
+/config.ini
+/config.py
+/tgbot.session
