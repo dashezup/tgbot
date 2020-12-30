@@ -1,7 +1,12 @@
 """Download music from YouTube/SoundCloud/Mixcloud, convert thumbnail
 to square thumbnail and upload to Telegram
 
-# ../config.py
+# requirements.txt
+OpenCC
+Pillow
+youtube-dl
+
+# ../../config.py
 MUSIC_CHATS = [
     -1234567891012,
     -2345678910123
@@ -25,8 +30,8 @@ from pyrogram.errors import UserNotParticipant
 from youtube_dl import YoutubeDL
 from PIL import Image
 from opencc import OpenCC
-from ..config import MUSIC_CHATS, MUSIC_USERS, MUSIC_DELAY_DELETE_INFORM
-from ..config import MUSIC_INFORM_AVAILABILITY, MUSIC_MAX_LENGTH
+from config import MUSIC_CHATS, MUSIC_USERS, MUSIC_DELAY_DELETE_INFORM
+from config import MUSIC_INFORM_AVAILABILITY, MUSIC_MAX_LENGTH
 
 TG_THUMB_MAX_LENGTH = 320
 SITES_REGEX = (

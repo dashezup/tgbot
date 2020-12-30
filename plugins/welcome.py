@@ -16,7 +16,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.types import ChatPermissions
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
-from ..config import WELCOME_CHATS, WELCOME_DELAY_KICK_MIN
+from config import WELCOME_CHATS, WELCOME_DELAY_KICK_MIN
 
 WELCOME_DELAY_KICK_SEC = WELCOME_DELAY_KICK_MIN * 60
 
