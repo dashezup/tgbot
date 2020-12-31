@@ -11,7 +11,7 @@ COMMANDS_TEXT_CONTACTS = (
     "feel free to contact"
 )
 COMMANDS_TEXT_HELP = (
-    MUSIC_INFORM_AVAILABILITY
+    COMMANDS_TEXT_START
     + "\n\n<b>Usage</b>:\n"
     "- Send a message that only contains a YouTube/SoundCloud/Mixcloud link "
     "to download the music\n"
