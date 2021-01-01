@@ -41,13 +41,10 @@ DELAY_DELETE = 15
                    & ~filters.edited)
 async def kick_user(_, message: Message):
     """!kick admin kick user"""
-    try:
-        if not (await _should_allow_admin_action(message)):
-            reply = await message.reply_text(USAGE_KICK)
-            await _delay_delete_messages((reply, message), DELAY_DELETE)
-            return
-    except UserNotParticipant:
-        await message.reply_text("Target user is not member of this chat")
+    error = await _error_disallowed_admin_action(message)
+    if error is not None:
+        reply = await message.reply_text(f"**ERROR**: {error}")
+        await _delay_delete_messages((reply, message), DELAY_DELETE)
         return
     reason = " ".join(message.command[1:])
     u_proposer = message.from_user
@@ -67,13 +64,10 @@ async def kick_user(_, message: Message):
                    & ~filters.edited)
 async def ban_user(_, message: Message):
     """!ban admin ban members"""
-    try:
-        if not (await _should_allow_admin_action(message)):
-            reply = await message.reply_text(USAGE_BAN)
-            await _delay_delete_messages((reply, message), DELAY_DELETE)
-            return
-    except UserNotParticipant:
-        await message.reply_text("Target user is not member of this chat")
+    error = await _error_disallowed_admin_action(message)
+    if error is not None:
+        reply = await message.reply_text(f"**ERROR**: {error}")
+        await _delay_delete_messages((reply, message), DELAY_DELETE)
         return
     reason = " ".join(message.command[1:])
     u_proposer = message.from_user
@@ -92,13 +86,10 @@ async def ban_user(_, message: Message):
                    & ~filters.edited)
 async def unban_user(_, message: Message):
     """!unban admin unban members"""
-    try:
-        if not (await _should_allow_admin_action(message)):
-            reply = await message.reply_text(USAGE_BAN)
-            await _delay_delete_messages((reply, message), DELAY_DELETE)
-            return
-    except UserNotParticipant:
-        await message.reply_text("Target user is not member of this chat")
+    error = await _error_disallowed_admin_action(message)
+    if error is not None:
+        reply = await message.reply_text(f"**ERROR**: {error}")
+        await _delay_delete_messages((reply, message), DELAY_DELETE)
         return
     reason = " ".join(message.command[1:])
     u_proposer = message.from_user
@@ -110,19 +101,30 @@ async def unban_user(_, message: Message):
     await message.delete()
 
 
-async def _should_allow_admin_action(message: Message):
-    if not message.reply_to_message or len(message.command) == 1:
-        return False
+async def _error_disallowed_admin_action(message: Message):
+    """Return None when none of the condition meet"""
+    print(message)
+    if message.sender_chat:
+        return "Sender is chat not user"
+    if not message.reply_to_message:
+        return "Reply to a message to take action on the member"
+    if message.reply_to_message.sender_chat:
+        return "Target is not user"
+    # elif len(message.command) == 1:
+    #     return False
     c_group = message.chat
     admin = ("creator", "administrator")
-    u_target_id = message.reply_to_message.from_user.id
-    member_target = await c_group.get_member(u_target_id)
-    if member_target.status in admin:
-        return False
-    member_proposer = await c_group.get_member(message.from_user.id)
-    if member_proposer.status not in admin:
-        return False
-    return True
+    try:
+        u_target_id = message.reply_to_message.from_user.id
+        member_target = await c_group.get_member(u_target_id)
+        if member_target.status in admin:
+            return "Target user can't be admin!"
+        member_proposer = await c_group.get_member(message.from_user.id)
+        if member_proposer.status not in admin:
+            return "You are not admin"
+    except UserNotParticipant:
+        return "Target user is not member of this chat"
+    return
 
 
 async def _delay_delete_messages(messages: tuple, delay: int):
