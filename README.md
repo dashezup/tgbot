@@ -11,7 +11,8 @@ A Telegram bot made with [Pyrogram Smart Plugins](https://docs.pyrogram.org/topi
 ## Run
 
 1. `virtualenv venv` to create a virtual environment
-2. install `libwebp-devel`, clear cache of pip (`~/.cache/pip` on linux distro)
+2. install `python3-devel zlib-devel libjpeg-turbo-devel libwebp-devel`,
+   clear cache of pip (`~/.cache/pip` on linux distro)
    for building wheel for Pillow.
    `venv/bin/pip install -U -r requirements.txt` to install the requirements
 3. Create a new `config.ini` file, copy-paste the following and replace the
