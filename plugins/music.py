@@ -1,6 +1,8 @@
 """Download music from YouTube/SoundCloud/Mixcloud, convert thumbnail
 to square thumbnail and upload to Telegram
 
+Send a link as a reply to bypass Music category check
+
 # requirements.txt
 OpenCC
 Pillow
@@ -83,7 +85,9 @@ async def _fetch_and_send_music(message: Message):
         }
         ydl = YoutubeDL(ydl_opts)
         info_dict = ydl.extract_info(message.text, download=False)
-        if _youtube_video_not_music(info_dict):
+        # send a link as a reply to bypass Music category check
+        if not message.reply_to_message \
+                and _youtube_video_not_music(info_dict):
             inform = ("This won't be downloaded "
                       "because it's not under Music category")
             await _reply_and_delete_later(message, inform,
