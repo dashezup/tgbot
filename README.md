@@ -34,4 +34,4 @@ A Telegram bot made with [Pyrogram Smart Plugins](https://docs.pyrogram.org/topi
 
 ## License
 
-GPL-3.0-or-later
+AGPL-3.0-or-later
