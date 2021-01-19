@@ -46,7 +46,7 @@ async def welcome(_, message: Message):
     await kick_restricted_after_delay(WELCOME_DELAY_KICK_SEC, button_message)
 
 
-@Client.on_callback_query(filters.regex("pressed_button"))
+@Client.on_callback_query(filters.regex("^pressed_button$"))
 async def callback_query_welcome_button(_, callback_query):
     """After the new member press the button, set his permissions to
     chat permissions, delete button message and join message

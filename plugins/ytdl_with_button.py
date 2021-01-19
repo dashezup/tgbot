@@ -54,7 +54,7 @@ async def ytdl_with_button(_, message: Message):
     )
 
 
-@Client.on_callback_query(filters.regex("ytdl_audio"))
+@Client.on_callback_query(filters.regex("^ytdl_audio$"))
 async def callback_query_ytdl_audio(_, callback_query):
     try:
         url = callback_query.message.reply_to_message.text
@@ -109,7 +109,7 @@ async def send_audio(message: Message, info_dict, audio_file):
     os.remove(thumbnail_file)
 
 
-@Client.on_callback_query(filters.regex("ytdl_video"))
+@Client.on_callback_query(filters.regex("^ytdl_video$"))
 async def callback_query_ytdl_video(_, callback_query):
     try:
         # url = callback_query.message.text
@@ -204,7 +204,7 @@ def get_resolution(info_dict):
     return (width, height)
 
 
-@Client.on_callback_query(filters.regex("forward_video"))
+@Client.on_callback_query(filters.regex("^forward_video$"))
 async def callback_query_forward_video(_, callback_query):
     m_edited = await callback_query.message.edit_reply_markup(None)
     m_cp = await m_edited.copy(CHANNEL_FORWARD_TO,
@@ -213,7 +213,7 @@ async def callback_query_forward_video(_, callback_query):
     await m_edited.reply(m_cp.link, quote=True)
 
 
-@Client.on_callback_query(filters.regex("ignore_video"))
+@Client.on_callback_query(filters.regex("^ignore_video$"))
 async def callback_query_ignore_video(_, callback_query):
     await callback_query.message.edit_reply_markup(None)
     await callback_query.answer("Ignored")
