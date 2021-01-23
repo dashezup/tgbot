@@ -16,36 +16,62 @@ from pyrogram.types import Message
 from pyrogram.errors import UserNotParticipant
 from config import ADMIN_CHATS
 
-USAGE_KICK = """**Usage**:
-*admin reply to a user message*
-`!ban [reason]`
-"""
-USAGE_BAN = """**Usage**:
-*admin reply to a user message*
-`!ban [reason]`
-"""
-USAGE_UNBAN = """**Usage**:
-*admin reply to a user message*
-`!unban [reason]`
-"""
-
 # should be more than 30 seconds
 # or less than 366 days
 DURATION_UNTIL_UNBAN = 60
 DELAY_DELETE = 15
 
 
+async def admin_action(_, __, message: Message) -> bool:
+    """Disallow:
+    1. sender_chat (channel or anonymous admin) instead of from_user
+    2. mention itself (!command @bot_self_username)
+    Accept:
+    1. reply a message with exactly !command and not his own message
+    2. !command @mention (and not a reply) and not mention himself
+    """
+    print(message)
+    if message.sender_chat or message.mentioned:
+        return False
+    if not (message.reply_to_message or message.entities):
+        return False
+    if message.reply_to_message and message.entities:
+        return False
+    if message.reply_to_message:
+        if message.reply_to_message.sender_chat:
+            return False
+        u_target = message.reply_to_message.from_user
+    if message.entities:
+        if len(message.entities) > 1 \
+                or message.entities[0].type != "text_mention":
+            return False
+        u_target = message.entities[0].user
+
+    if u_requester.id == u_target.id:
+        return False
+    admin = ("creator", "administrator")
+    if (await message.chat.get_member(u_requester.id)).status in admin:
+        return True
+    return False
+
+filter_admin_action = filters.create(admin_action)
+
+
 @Client.on_message(filters.command(["kick"], prefixes="!")
                    & filters.chat(ADMIN_CHATS)
+                   & filter_admin_action
                    & filters.incoming
                    & ~filters.edited)
 async def kick_user(_, message: Message):
     """!kick admin kick user"""
-    error = await _error_disallowed_admin_action(message)
-    if error is not None:
-        reply = await message.reply_text(f"**ERROR**: {error}")
-        await _delay_delete_messages((reply, message), DELAY_DELETE)
-        return
+    # print(message)
+    print("placeholder for !kick")
+    return
+    # error = await _error_disallowed_admin_action(message)
+    # if error is not None:
+    #     reply = await message.reply_text(f"**ERROR**: {error}")
+    #     await _delay_delete_messages((reply, message), DELAY_DELETE)
+    #     return
     reason = " ".join(message.command[1:])
     u_proposer = message.from_user
     u_target = message.reply_to_message.from_user
