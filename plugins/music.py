@@ -36,14 +36,14 @@ from config import MUSIC_CHATS, MUSIC_USERS, MUSIC_DELAY_DELETE_INFORM
 from config import MUSIC_INFORM_AVAILABILITY, MUSIC_MAX_LENGTH
 
 TG_THUMB_MAX_LENGTH = 320
-SITES_REGEX = (
+REGEX_SITES = (
     r"^((?:https?:)?\/\/)"
     r"?((?:www|m)\.)"
     r"?((?:youtube\.com|youtu\.be|soundcloud\.com|mixcloud\.com))"
     r"(\/)([-a-zA-Z0-9()@:%_\+.~#?&//=]*)([\w\-]+)(\S+)?$"
 )
-EXCLUDE_PLAYLISTS = (
-    r"\/playlist\?list=|&list=|\/sets\/"
+REGEX_EXCLUDE_URL = (
+    r"\/channel\/|\/playlist\?list=|&list=|\/sets\/"
 )
 s2tw = OpenCC('s2tw.json').convert
 
@@ -51,8 +51,8 @@ s2tw = OpenCC('s2tw.json').convert
 @Client.on_message(filters.text
                    & (filters.chat(MUSIC_CHATS) | filters.private)
                    & filters.incoming
-                   & filters.regex(SITES_REGEX)
-                   & ~filters.regex(EXCLUDE_PLAYLISTS)
+                   & filters.regex(REGEX_SITES)
+                   & ~filters.regex(REGEX_EXCLUDE_URL)
                    & ~filters.edited)
 async def music_downloader(client, message: Message):
     """Add members of specified chats to the list when it's a private
