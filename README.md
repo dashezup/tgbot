@@ -4,7 +4,7 @@ A Telegram bot made with [Pyrogram Smart Plugins](https://docs.pyrogram.org/topi
 
 ## Requirements
 
-- Python 3.6 or higher
+- Python 3.6 or higher (some plugins may require higher versions)
 - A [Telegram API key](//docs.pyrogram.org/intro/setup#api-keys)
 - A [Telegram bot token](//t.me/botfather)
 
