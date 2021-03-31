@@ -1,19 +1,12 @@
 """reply ping with pong
 
-# ../config.py
-# int | str | list
-PING_CHATS = -1234567890123
-# int | str | list
-PING_USERS = 1234567890
-PING_DELAY_DELETE = 8
-
 """
 import asyncio
 from time import time
 from datetime import datetime
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from config import PING_CHATS, PING_USERS
+from config import COMMON_CHATS
 
 PING_DELAY_DELETE = 8
 START_TIME = datetime.utcnow()
@@ -40,11 +33,15 @@ def _human_time_duration(seconds):
     return ', '.join(parts)
 
 
-@Client.on_message(filters.text
-                   & filters.chat(["VCSets", "ezupdev"])
-                   & filters.incoming
-                   & ~filters.edited
-                   & filters.regex("^/ping$"))
+main_filter = (
+    filters.text
+    & filters.chat(COMMON_CHATS)
+    & filters.incoming
+    & ~filters.edited
+)
+
+
+@Client.on_message(main_filter & filters.regex("^/ping$"))
 async def ping_pong(_, message: Message):
     """reply ping with pong and delete both messages"""
     start = time()
@@ -54,11 +51,7 @@ async def ping_pong(_, message: Message):
     await _delay_delete_messages((reply, message), PING_DELAY_DELETE)
 
 
-@Client.on_message(filters.text
-                   & (filters.chat(PING_CHATS) | filters.user(PING_USERS))
-                   & filters.incoming
-                   & ~filters.edited
-                   & filters.regex("^/uptime$"))
+@Client.on_message(main_filter & filters.regex("^/uptime$"))
 async def get_uptime(_, message: Message):
     """/uptime Reply with readable uptime and ISO 8601 start time"""
     current_time = datetime.utcnow()

@@ -8,11 +8,12 @@ import socket
 import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from config import COMMON_CHATS
 
 DELETE_DELAY = 8
 
 
-@Client.on_message(filters.chat(["VCSets", "ezupdev"])
+@Client.on_message((filters.chat(COMMON_CHATS) | filters.private)
                    & filters.text
                    & ~filters.edited
                    & filters.regex('^/paste$'))
@@ -22,13 +23,13 @@ async def upload_paste_to_ezup_pastebin(_, m: Message):
         return
     paste_content = await _get_paste_content(reply)
     if not paste_content:
-        response = await m.reply_text("ezpaste: invalid")
+        response = await m.reply_text("ezpaste: invalid", quote=True)
         await _delay_delete_messages([response, m])
         return
     url = await _netcat('ezup.dev', 9999, paste_content)
     if not reply.document:
         await asyncio.sleep(1)
-    await reply.reply_text(url)
+    await reply.reply_text(url, quote=True)
     await m.delete()
 
 
