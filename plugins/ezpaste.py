@@ -6,7 +6,7 @@ Commands:
 import os
 import socket
 import asyncio
-from pyrogram import Client, filters, emoji
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
 DELETE_DELAY = 8
@@ -22,11 +22,13 @@ async def upload_paste_to_ezup_pastebin(_, m: Message):
         return
     paste_content = await _get_paste_content(reply)
     if not paste_content:
-        response = await m.reply_text(f"{emoji.ROBOT} ezpaste: invalid")
+        response = await m.reply_text("ezpaste: invalid")
         await _delay_delete_messages([response, m])
         return
     url = await _netcat('ezup.dev', 9999, paste_content)
-    await reply.reply_text(f"{emoji.ROBOT} ezpaste: {url}")
+    if not reply.document:
+        await asyncio.sleep(1)
+    await reply.reply_text(url)
     await m.delete()
 
 
