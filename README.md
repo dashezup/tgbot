@@ -37,7 +37,7 @@ A Telegram bot made with [Pyrogram Smart Plugins](https://docs.pyrogram.org/topi
 AGPL-3.0-or-later
 
 ```
-    tgbot, a Telegram bot made with Pyrogram Smart Plugins
+    tgbot, a collection of Pyrogram Smart Plugins for Telegram bots
     Copyright (C) 2021  Dash Eclipse
 
     This program is free software: you can redistribute it and/or modify
