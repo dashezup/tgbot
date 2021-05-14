@@ -1,7 +1,20 @@
 # tgbot
 
-A Telegram bot made
-with [Pyrogram Smart Plugins](https://docs.pyrogram.org/topics/smart-plugins)
+A collection of Pyrogram Smart Plugins for Telegram bots, made with
+[Pyrogram Smart Plugins](https://docs.pyrogram.org/topics/smart-plugins)
+
+## Plugins
+
+| Plugin                   | Description                                                |
+|--------------------------|------------------------------------------------------------|
+| `admin.call-adimn`       | @admin in groups                                           |
+| `captcha.emoji_buttons`  | 4 random emojis for group CAPTCHA                          |
+| `captcha.one_button`     | one button for group CAPTCHA                               |
+| `media.music`            | download music from YouTube/SoundCloud/Mixcloud            |
+| `media.ytdl_with_button` | download videos from various sites                         |
+| `vcsets.notes`           | notes for Telegram group @VCSets                           |
+| `commands`               | some commands such like `!start` and `!help`               |
+| `ping`                   | reply to ping with pong for checking if the bot was online |
 
 ## Requirements
 
