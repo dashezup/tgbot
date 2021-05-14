@@ -3,6 +3,11 @@
 A collection of Pyrogram Smart Plugins for Telegram bots, made with
 [Pyrogram Smart Plugins](https://docs.pyrogram.org/topics/smart-plugins)
 
+- Some of the plugins are used in [@ezupdevbot](https://t.me/ezupdevbot)
+  (exclusive use in Dash's groups)
+- `media.music` plugin is ported to the Heroku deployment friendly project
+  [tgmusicbot](https://github.com/callsmusic/tgmusicbot)
+
 ## Plugins
 
 | Plugin                   | Description                                                |
@@ -14,6 +19,7 @@ A collection of Pyrogram Smart Plugins for Telegram bots, made with
 | `media.ytdl_with_button` | download videos from various sites                         |
 | `vcsets.notes`           | notes for Telegram group @VCSets                           |
 | `commands`               | some commands such like `!start` and `!help`               |
+| `pin`                    | /pin a message and open a poll for loud pin                |
 | `ping`                   | reply to ping with pong for checking if the bot was online |
 
 ## Requirements
