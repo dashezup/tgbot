@@ -5,6 +5,9 @@
 /venv/
 __pycache__/
 
+# Pycharm
+/.idea/
+
 # tgbot
 /config.ini
 /config.py
