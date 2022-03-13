@@ -11,7 +11,8 @@ MAX_ZIP_FILE_SIZE = 10485760
 
 
 @Client.on_message(filters.document
-                   & filters.incoming)
+                   & filters.incoming
+                   & filters.regex(r"#apple_health$"))
 async def command_apple_health(_, m: Message):
     doc = m.document
     valid_file = (
