@@ -42,7 +42,10 @@ async def command_apple_health(_, m: Message):
     writer = csv.writer(sio, quoting=csv.QUOTE_NONNUMERIC, lineterminator='\n')
     writer.writerows(records)
     bio = BytesIO(sio.getvalue().encode("utf-8"))
-    bio.name = "weight.csv"
+    bio.name = "apple-health-weight-{}-{}.csv".format(
+        records[0][0][:10].replace('-', ''),
+        records[-1][0][:10].replace('-', '')
+    )
     caption = (
         "{} **Apple Health - Body Measurements - Weight** ({} records)\n"
         + "`< {} ({} {})`\n"
